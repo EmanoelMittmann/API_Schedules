@@ -9,9 +9,10 @@ const app = express()
 AppDataSource.initialize().then(async () => {
     // populate()
 
+
     app.use(cors())
 
     app.use(routes)
     
-    app.listen(3333, () => console.log('Listening on the port ' +  3333))
+    app.listen(process.env.PORT, () => console.log('Listening on the port ' +  process.env.PORT))
 }).catch(error => console.log(error))
