@@ -1,13 +1,14 @@
 import { schedulesRepository } from "../repository/Schedule";
-import { randomUUID } from "crypto";
 import { Status } from "../../entity/Schedules";
 import { Request, Response } from "express";
+import { httpStatusCode } from "Errors";
 
 export class SchedulesController {
 
     async listProfessionalAvailable(req: Request, res: Response){
         const limit = Number(req.query?.limit)
         const page = (Number(req.query?.page) - 1 ) * limit | 10
+
         try{
             const ArrayList = await schedulesRepository.find({
                 relations: {
@@ -32,10 +33,9 @@ export class SchedulesController {
                 status: opts.status
             }))
         
-            return res.status(200).send(NewArr)
+            return res.status(httpStatusCode.OK).send(NewArr)
         }catch(error){
-            console.log("error: ", error);
-            return res.status(400).send(error)
+            return res.status(httpStatusCode.BAD_REQUEST).send(error)
         }
     }
 
@@ -46,15 +46,15 @@ export class SchedulesController {
                 id: id
             })
             if(!schedule){
-                return res.status(404).send('Não encontrado')
+                return res.status(httpStatusCode.BAD_REQUEST).send('Não encontrado')
             }
             const test = await schedulesRepository.update(id,{
                 status: Status.AGENDADO
             })
 
-            return res.status(200).send('Status Atualizado')
+            return res.status(httpStatusCode.OK).send('Status Atualizado')
         } catch (error) {
-            return res.status(400).send('Parametros inválidos')   
+            return res.status(httpStatusCode.BAD_REQUEST).send('Parametros inválidos')   
         }
     }
 
@@ -65,15 +65,15 @@ export class SchedulesController {
                 id: id
             })
             if(!schedule){
-                return res.status(404).send('Não Encontrado')
+                return res.status(httpStatusCode.BAD_REQUEST).send('Não Encontrado')
             }            
             await schedulesRepository.update(id,{
                 status: Status.CANCELADO
             })
 
-            return res.status(200).send('Status Cancelado')
+            return res.status(httpStatusCode.OK).send('Status Cancelado')
         } catch(error){
-            return res.status(400).send('Parametros inválidos')
+            return res.status(httpStatusCode.BAD_REQUEST).send('Parametros inválidos')
         }
     }
 }

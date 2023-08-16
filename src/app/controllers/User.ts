@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import { UserRepository } from "../repository/User";
 import { Request, Response } from "express";
+import { httpStatusCode } from "Errors";
 
 
 export class UserController{
@@ -16,9 +17,9 @@ export class UserController{
                 },
                 take: 10
             })
-            res.status(200).send(Professional)
+            res.status(httpStatusCode.OK).send(Professional)
         } catch (error) {
-            return res.status(400).send(error)
+            return res.status(httpStatusCode.BAD_REQUEST).send(error)
         }
     }   
 }

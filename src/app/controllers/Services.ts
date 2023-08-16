@@ -1,3 +1,4 @@
+import { httpStatusCode } from "../../Errors";
 import { servicesRepository } from "app/repository/Services";
 import { Request, Response } from "express";
 
@@ -28,10 +29,10 @@ export class ServicesController {
           availability: prop.professional.availabilitily,
         }));
 
-        res.status(200).send(List)
+        res.status(httpStatusCode.OK).send(List)
         
     } catch (error) {
-        res.status(501).send(`Erro interno`)
+        res.status(httpStatusCode.BAD_REQUEST).send(`Erro interno`)
     }
   }
 }
