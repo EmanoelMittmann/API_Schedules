@@ -7,9 +7,6 @@ import routes from './routes'
 const app = express()
 
 AppDataSource.initialize().then(async () => {
-    // populate()
-
-
     app.use(cors())
 
     app.use(routes)

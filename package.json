@@ -23,7 +23,7 @@
       "migration": "npx typeorm-ts-node-esm -d ./src/data-source.ts migration:run",
       "revert": "npx typeorm-ts-node-esm -d ./src/data-source.ts migration:revert",
       "typeorm": "typeorm-ts-node-commonjs",
-      "seed": "ts-node ./src/utils/seed.ts",
+      "seed": "ts-node-esm ./src/utils/seed.ts",
       "generate": "npx typeorm-ts-node-esm migration:generate -d ./src/data-source.ts ./src/migration/migration"
    }
 }

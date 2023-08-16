@@ -5,7 +5,6 @@ import { SchedulesController } from './app/controllers/Schedules'
 const {list} = new UserController
 const { 
     listProfessionalAvailable,
-    Save,
     updateStatus,
     CancelSchedule
     } = new SchedulesController
@@ -19,7 +18,6 @@ router
 router
     .route('/Schedules')
     .get(listProfessionalAvailable)
-    .post(Save)
 
 router.put('/updateSchedule/:id', updateStatus)
 router.put('/cancelStatus/:id', CancelSchedule)

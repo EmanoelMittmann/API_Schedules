@@ -4,46 +4,6 @@ import { Status } from "../../entity/Schedules";
 import { Request, Response } from "express";
 
 export class SchedulesController {
-    async Save(req: Request, res: Response){
-        const {date,time ,id_services} = req.body
-
-        try{
-
-        const exist = await schedulesRepository.findOneBy({
-            services:{
-                id: id_services
-            }
-        })
-        if(exist){
-            return res.status(403).send('Serviço ja Agendado')
-        }
-
-        const schedule = schedulesRepository.create({
-            id: randomUUID(),
-            date: date,
-            time: time,
-            status: Status.AGENDADO,
-            services:{
-                id: id_services
-            }
-
-        })
-
-            await schedulesRepository.save({...schedule})
-            const response = {
-                id: schedule.id,
-                service_id: schedule.services.id,
-                date: schedule.date,
-                time: schedule.time,
-                status: schedule.status
-            }
-            res.status(200).send(response)
-
-        }catch(error){
-            console.log("error: ", error);
-            res.status(400).send(error)
-        }
-    }
 
     async listProfessionalAvailable(req: Request, res: Response){
         const limit = Number(req.query?.limit)
@@ -89,7 +49,7 @@ export class SchedulesController {
                 return res.status(404).send('Não encontrado')
             }
             const test = await schedulesRepository.update(id,{
-                status: Status.CONCLUIDO
+                status: Status.AGENDADO
             })
 
             return res.status(200).send('Status Atualizado')
